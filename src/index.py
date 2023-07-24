@@ -62,7 +62,6 @@ try:
             print(symbol)
         if (stockPredictionMean != None):
             listMean.append([symbol, stockPredictionMedian])
-            print(symbol)
 except:
     print("Keyboard error: " + listMedian)
     
@@ -87,12 +86,12 @@ def selection_sort(arr):
 
 selection_sort(listMedian)
 print(listMedian)
-print("The top 3 investments for buying are: ")
+print("The top 3 investments for buying are: (MEDIAN)")
 print("1. " + str(listMedian[len(listMedian)-1]))
 print("2. " + str(listMedian[len(listMedian)-2]))
 print("3. " + str(listMedian[len(listMedian)-3]))
 print("\n")
-print("The top 3 investments for shorting are: ")
+print("The top 3 investments for shorting are: (MEDIAN)")
 print("1. " + str(listMedian[0]))
 print("2. " + str(listMedian[1]))
 print("3. " + str(listMedian[2]))
@@ -110,4 +109,31 @@ if extendAnswer == 'y' or extendAnswer == 'Y':
     print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: \n")
     for i in range(increaseAmount):
         print(str(i+1) + ". " + str(listMedian[i]))
-    
+
+
+print("Sorting list... ")
+selection_sort(listMean)
+
+print("The top 3 investments for buying are: (MEAN)")
+print("1. " + str(listMean[len(listMean)-1]))
+print("2. " + str(listMean[len(listMean)-2]))
+print("3. " + str(listMean[len(listMean)-3]))
+print("\n")
+print("The top 3 investments for shorting are: (MEAN)")
+print("1. " + str(listMean[0]))
+print("2. " + str(listMean[1]))
+print("3. " + str(listMean[2]))
+print("\n")
+extendAnswer = input("Would you like to extend this? (y/n) ")
+print("\n")
+
+if extendAnswer == 'y' or extendAnswer == 'Y':
+    extendAmount = input("How much would you like to extend this by? ")
+    print("\n")
+    increaseAmount = int(extendAmount)+3
+    print("The top " + str(increaseAmount) + " investments for buying are: \n")
+    for i in range(increaseAmount):
+        print(str(i+1) + ". " + str(listMean[len(listMean)-(i+1)]))
+    print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: \n")
+    for i in range(increaseAmount):
+        print(str(i+1) + ". " + str(listMean[i]))
