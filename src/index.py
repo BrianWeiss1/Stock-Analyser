@@ -1,4 +1,5 @@
 import yfinance as yf
+# need to make it so that you give the stock to getStockPredicted functions to be able to do mean and median
 def checkStock(symbol):
     try:
         stock = yf.Ticker(symbol)
@@ -6,9 +7,7 @@ def checkStock(symbol):
     except:
         return None
 
-def getStockPredictionMean(symbol):
-    stock = checkStock(symbol)
-    # print(stock.info)
+def getStockPredictionMean(stock):
     try:
         if stock.info['marketCap'] < 100000000:
             return None
@@ -24,9 +23,7 @@ def getStockPredictionMean(symbol):
     assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange
 
-def getStockPredictionMedian(symbol):
-    stock = checkStock(symbol)
-    # print(stock.info)
+def getStockPredictionMedian(stock):
     try:
         if stock.info['marketCap'] < 100000000:
             return None
@@ -54,22 +51,26 @@ def getStockInfomation(symbol):
 
 stockList = ['A', 'AA', 'AAL', 'AAME', 'AAN', 'AAOI', 'AAON', 'AAP', 'AAPL', 'AAT', 'AAXN', 'ABBV', 'ABC', 'ABCB', 'ABEO', 'ABG', 'ABIO', 'ABM', 'ABMD', 'ABR', 'ABT', 'ABTX', 'AC', 'ACA', 'ACAD', 'ACBI', 'ACC', 'ACCO', 'ACER', 'ACGL', 'ACHC', 'ACHV', 'ACIA', 'ACIW', 'ACLS', 'ACM', 'ACMR', 'ACN', 'ACNB', 'ACOR', 'ACRE', 'ACRS', 'ACRX', 'ACTG', 'ACU', 'ACY', 'ADBE', 'ADC', 'ADES', 'ADI', 'ADM', 'ADMA', 'ADMP', 'ADMS', 'ADNT', 'ADP', 'ADRO', 'ADS', 'ADSK', 'ADSW', 'ADT', 'ADTN', 'ADUS', 'ADVM', 'ADXS', 'AE', 'AEE', 'AEGN', 'AEHR', 'AEIS', 'AEL', 'AEMD', 'AEO', 'AEP', 'AERI', 'AES', 'AEY', 'AFG', 'AFH', 'AFI', 'AFIN', 'AFL', 'AGCO', 'AGE', 'AGEN', 'AGFS', 'AGIO', 'AGLE', 'AGM', 'AGNC', 'AGO', 'AGR', 'AGRX', 'AGS', 'AGTC', 'AGX', 'AGYS', 'AHC', 'AHH', 'AHT', 'AIG', 'AIMC', 'AIMT', 'AIN', 'AINC', 'AIR', 'AIRG', 'AIRI', 'AIRT', 'AIT', 'AIV', 'AIZ', 'AJG', 'AJRD', 'AJX', 'AKAM', 'AKBA', 'AKCA', 'AKER', 'AKR', 'AKTS', 'AL']
 try:
-    correspondinglst = []
-    correspondingdict = {}
+    listMedian = []
+    listMean = []
     for symbol in stockList:
-        stock = getStock(symbol)
-        stockPrediction = getStockPredictionMedian(symbol)
-        if (stockPrediction != None):
-            correspondinglst.append([symbol, stockPrediction])
-            correspondingdict[symbol] = stockPrediction
+        stock = checkStock(symbol)
+        stockPredictionMedian = getStockPredictionMedian(stock)
+        stockPredictionMean = getStockPredictionMean(stock)
+        if (stockPredictionMedian != None):
+            listMedian.append([symbol, stockPredictionMedian])
+            print(symbol)
+        if (stockPredictionMean != None):
+            listMean.append([symbol, stockPredictionMedian])
             print(symbol)
 except:
-    print(correspondinglst)
-    print(correspondingdict)
-print(correspondinglst)
+    print("Keyboard error: " + listMedian)
+    
+print(listMedian)
 print("\n\n\n\n\n\n")
-print(correspondingdict)
+print(listMean)
 print("\n\n\n\n\n\n")
+
 def selection_sort(arr):
     n = len(arr)
     for i in range(n - 1):
@@ -84,17 +85,17 @@ def selection_sort(arr):
         # Swap the minimum element with the first element of the unsorted part
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
-selection_sort(correspondinglst)
-print(correspondinglst)
+selection_sort(listMedian)
+print(listMedian)
 print("The top 3 investments for buying are: ")
-print("1. " + str(correspondinglst[len(correspondinglst)-1]))
-print("2. " + str(correspondinglst[len(correspondinglst)-2]))
-print("3. " + str(correspondinglst[len(correspondinglst)-3]))
+print("1. " + str(listMedian[len(listMedian)-1]))
+print("2. " + str(listMedian[len(listMedian)-2]))
+print("3. " + str(listMedian[len(listMedian)-3]))
 print("\n")
 print("The top 3 investments for shorting are: ")
-print("1. " + str(correspondinglst[0]))
-print("2. " + str(correspondinglst[1]))
-print("3. " + str(correspondinglst[2]))
+print("1. " + str(listMedian[0]))
+print("2. " + str(listMedian[1]))
+print("3. " + str(listMedian[2]))
 print("\n")
 extendAnswer = input("Would you like to extend this? (y/n) ")
 print("\n")
@@ -105,8 +106,8 @@ if extendAnswer == 'y' or extendAnswer == 'Y':
     increaseAmount = int(extendAmount)+3
     print("The top " + str(increaseAmount) + " investments for buying are: \n")
     for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(correspondinglst[len(correspondinglst)-(i+1)]))
+        print(str(i+1) + ". " + str(listMedian[len(listMedian)-(i+1)]))
     print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: \n")
     for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(correspondinglst[i]))
+        print(str(i+1) + ". " + str(listMedian[i]))
     
