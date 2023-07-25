@@ -1,5 +1,5 @@
 import yfinance as yf
-# need to make it so that you give the stock to getStockPredicted functions to be able to do mean and median
+
 def checkStock(symbol):
     try:
         stock = yf.Ticker(symbol)
@@ -39,7 +39,6 @@ def getStockPredictionMedian(stock):
     assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange
 
-
 def getStockInfomation(symbol):
     stock = yf.Ticker(symbol)
     stock.info["targetHighPrice"]
@@ -56,6 +55,7 @@ fstock.close()
 stockList = stockList[0]
 stockList = stockList[0:len(stockList)-1]
 stockList = eval(stockList)
+
 # print(stockList)
 # try:    
 #     listMedian = []

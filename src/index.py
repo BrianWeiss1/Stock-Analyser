@@ -86,6 +86,8 @@ def selection_sort(arr):
 
 selection_sort(listMedian)
 print(listMedian)
+
+
 print("The top 3 investments for buying are: (MEDIAN)")
 print("1. " + str(listMedian[len(listMedian)-1]))
 print("2. " + str(listMedian[len(listMedian)-2]))
