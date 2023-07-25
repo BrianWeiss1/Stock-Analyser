@@ -67,16 +67,12 @@ stockList = stockList[0]
 stockList = stockList[0:len(stockList)-1]
 stockList = eval(stockList)
 
-print(stockList)
 try:    
     listMedian = []
     listMean = []
-    print("a")
     for symbol in stockList:
         stock = checkStock(symbol)
-        print("a")
         stockPredictionMedian = getStockPredictionMedian(stock)
-        print(stockPredictionMedian)
         stockPredictionMean = getStockPredictionMean(stock)
         if (stockPredictionMedian != None):
             listMedian.append([symbol, stockPredictionMedian])
