@@ -50,28 +50,32 @@ def getStockInfomation(symbol):
     
 fstock = open("stocks.txt", 'r')
 
-stockList = fstock.readline()
+stockList = fstock.readlines()
 
 fstock.close()
-try:    
-    listMedian = []
-    listMean = []
-    for symbol in stockList:
-        stock = checkStock(symbol)
-        stockPredictionMedian = getStockPredictionMedian(stock)
-        stockPredictionMean = getStockPredictionMean(stock)
-        if (stockPredictionMedian != None):
-            listMedian.append([symbol, stockPredictionMedian])
-            print(symbol)
-        if (stockPredictionMean != None):
-            listMean.append([symbol, stockPredictionMean])
-except:
-    print("Keyboard error: " + listMedian)
+stockList = stockList[0]
+stockList = stockList[0:len(stockList)-1]
+stockList = eval(stockList)
+# print(stockList)
+# try:    
+#     listMedian = []
+#     listMean = []
+#     for symbol in stockList:
+#         stock = checkStock(symbol)
+#         stockPredictionMedian = getStockPredictionMedian(stock)
+#         stockPredictionMean = getStockPredictionMean(stock)
+#         if (stockPredictionMedian != None):
+#             listMedian.append([symbol, stockPredictionMedian])
+#             print(symbol)
+#         if (stockPredictionMean != None):
+#             listMean.append([symbol, stockPredictionMean])
+# except:
+#     print("Keyboard error: " + listMedian)
     
-print(listMedian)
-print("\n\n\n\n\n\n")
-print(listMean)
-print("\n\n\n\n\n\n")
+# print(listMedian)
+# print("\n\n\n\n\n\n")
+# print(listMean)
+# print("\n\n\n\n\n\n")
 
 def selection_sort(arr):
     n = len(arr)
@@ -86,47 +90,64 @@ def selection_sort(arr):
 
         # Swap the minimum element with the first element of the unsorted part
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
-
+# import ast
 fmean = open("meanlist.txt", 'r')
 fmedian = open("medianlist.txt", 'r')
 
-listMean = fmean.readline()
+listMean = fmean.readlines()
+listMean = eval(listMean[0])
 
-listMedian = fmedian.readline()
+listMedian = fmedian.readlines()
+listMedian = eval(listMedian[0])
+# selection_sort(listMedian)
 
-fmean.close()
-fmedian.close()
+# print( "List Median is " + str(listMedian))
+
+# # fmean.close()
+# # fmedian.close()
+# a = input("You got that?")
+# selection_sort(listMean)
+
+# print( "List mean is " + str(listMean))
+
+# # fmean.close()
+# # fmedian.close()
+# a = input("You got that?")
 
 
+print("List Mean is " + str(listMean))
 print("The top 3 investments for buying are: (MEDIAN)")
 print("1. " + str(listMedian[len(listMedian)-1]))
 print("2. " + str(listMedian[len(listMedian)-2]))
 print("3. " + str(listMedian[len(listMedian)-3]))
 print("\n")
+
 print("The top 3 investments for shorting are: (MEDIAN)")
 print("1. " + str(listMedian[0]))
 print("2. " + str(listMedian[1]))
 print("3. " + str(listMedian[2]))
 print("\n")
-extendAnswer = input("Would you like to extend this? (y/n) ")
-print("\n")
-confirm = False
-if extendAnswer == 'y' or extendAnswer == 'Y':
-    confirm == True
-while(confirm == True):
-    extendAmount = input("How much would you like to extend this by? ")
+previousExtenedAmount = 3
+thing = True
+while(thing == True):
+    extendAnswer = input("Would you like to extend this? (y/n) ")
     print("\n")
-    increaseAmount = int(extendAmount)+3
-    print("The top " + str(increaseAmount) + " investments for buying are: (MEDIAN)\n")
-    for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(listMedian[len(listMedian)-(i+1)]))
-    print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: (MEDIAN)\n")
-    for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(listMedian[i]))
 
 
-print("Sorting list... ")
-selection_sort(listMean)
+    if extendAnswer == 'y' or extendAnswer == 'Y':
+        extendAmount = input("How much would you like to extend this by? ")
+        print("\n")
+        increaseAmount = int(extendAmount)+previousExtenedAmount
+        previousExtenedAmount = increaseAmount
+        print("The top " + str(increaseAmount) + " investments for buying are: (MEDIAN)\n")
+        for i in range(increaseAmount):
+            print(str(i+1) + ". " + str(listMean[len(listMean)-(i+1)]))
+        print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: (MEDIAN)\n")
+        for i in range(increaseAmount):
+            print(str(i+1) + ". " + str(listMean[i]))
+    else:
+        thing == False
+        break
 
 print("The top 3 investments for buying are: (MEAN)")
 print("1. " + str(listMean[len(listMean)-1]))
@@ -138,16 +159,24 @@ print("1. " + str(listMean[0]))
 print("2. " + str(listMean[1]))
 print("3. " + str(listMean[2]))
 print("\n")
-extendAnswer = input("Would you like to extend this? (y/n) ")
-print("\n")
 
-if extendAnswer == 'y' or extendAnswer == 'Y':
-    extendAmount = input("How much would you like to extend this by? ")
+previousExtenedAmount = 3
+thing = True
+while(thing == True):
+    extendAnswer = input("Would you like to extend this? (y/n) ")
     print("\n")
-    increaseAmount = int(extendAmount)+3
-    print("The top " + str(increaseAmount) + " investments for buying are: (MEAN)\n")
-    for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(listMean[len(listMean)-(i+1)]))
-    print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: (MEAN)\n")
-    for i in range(increaseAmount):
-        print(str(i+1) + ". " + str(listMean[i]))
+
+    if extendAnswer == 'y' or extendAnswer == 'Y':
+        extendAmount = input("How much would you like to extend this by? ")
+        print("\n")
+        increaseAmount = int(extendAmount)+previousExtenedAmount
+        previousExtenedAmount = increaseAmount
+        print("The top " + str(increaseAmount) + " investments for buying are: (MEDIAN)\n")
+        for i in range(increaseAmount):
+            print(str(i+1) + ". " + str(listMean[len(listMean)-(i+1)]))
+        print("\n\n\nThe top " + str(increaseAmount) + " investments for shorting are: (MEDIAN)\n")
+        for i in range(increaseAmount):
+            print(str(i+1) + ". " + str(listMean[i]))
+    else:
+        thing == False
+        break
