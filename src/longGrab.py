@@ -59,7 +59,7 @@ def getStockInfomation(symbol):
     stock.info["recommendationKey"]
     stock.info["numberOfAnalystOpinions"]
     
-fstock = open("stocks.txt", 'r')
+fstock = open("documents/stocks.txt", 'r')
 
 stockList = fstock.readlines()
 
@@ -94,19 +94,20 @@ print(str(totalTime) + ": Total Time")
 
 print( "List Median is " + str(listMedian))
 
-a = input("You got that?")
+a = input("Write to medianlist.txt?")
 if (a == 'y' or a == 'Y'):
-    medianfile = open('documents/testmedianlist', 'w')
+    medianfile = open('documents/medianlist.txt', 'w')
     medianfile.write(str(listMedian))
 
 selection_sort(listMean)
 
-a = input("You got that?")
+a = input("Write to meanlist.txt?")
 if (a == 'y' or a == 'Y'):
-    meanfile = open('documents/testmeanlist', 'w')
+    meanfile = open('documents/meanlist.txt', 'w')
     meanfile.write(str(listMean))
 
 # fmean.close()
 # fmedian.close()
-a = input("You got that?")
+meanfile.close()
+medianfile.close()
 

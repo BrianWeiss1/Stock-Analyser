@@ -1,8 +1,8 @@
 import sys
 from termcolor import colored, cprint
 
-fmean = open("meanlist.txt", 'r')
-fmedian = open("medianlist.txt", 'r')
+fmean = open("documents/meanlist.txt", 'r')
+fmedian = open("documents/medianlist.txt", 'r')
 
 listMean = fmean.readlines()
 listMean = eval(listMean[0])
