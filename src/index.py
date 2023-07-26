@@ -52,6 +52,9 @@ while(thing == True):
         thing == False
         break
 
+
+previousExtenedAmount = 3
+
 print("The top 3 investments for " + colored("BUYING", 'green') + " are: (MEAN)")
 for i in range(previousExtenedAmount):
     text = colored(str(round(((listMean[len(listMean)-(i+1)][1])/100) + 1, 2)), 'green')
@@ -60,7 +63,6 @@ for i in range(previousExtenedAmount):
 print("\n")
 
 print("The top 3 investments for " + colored("SHORTING", 'red') + " are: (MEAN)")
-previousExtenedAmount = 3
 for i in range(previousExtenedAmount):
     text = colored(str(round(((listMean[i][1])/100) + 1, 2)), 'red')
     text2 = colored("x ", 'red')

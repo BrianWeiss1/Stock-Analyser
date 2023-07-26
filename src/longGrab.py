@@ -1,4 +1,7 @@
 import yfinance as yf
+import time as timer
+
+startTime = timer.time()
 
 def selection_sort(arr):
     n = len(arr)
@@ -83,14 +86,25 @@ except:
     print("Keyboard error: " + listMedian)
 
 selection_sort(listMedian)
+endTimer = timer.time()
+
+totalTime = (endTimer-startTime)/1000
+
+print(str(totalTime) + ": Total Time")
 
 print( "List Median is " + str(listMedian))
 
 a = input("You got that?")
+if (a == 'y' or a == 'Y'):
+    medianfile = open('documents/testmedianlist', 'w')
+    medianfile.write(str(listMedian))
 
 selection_sort(listMean)
 
-print( "List mean is " + str(listMean))
+a = input("You got that?")
+if (a == 'y' or a == 'Y'):
+    meanfile = open('documents/testmeanlist', 'w')
+    meanfile.write(str(listMean))
 
 # fmean.close()
 # fmedian.close()
