@@ -34,12 +34,10 @@ def getStockPredictionMean(symbol):
 def getStockPredictionMedian(symbol):
     stock = yf.Ticker(symbol)
     currentStockPrice = stock.info["currentPrice"] # 100
-    print(currentStockPrice)
     medianStockPrice = stock.info['targetMeanPrice'] # 150
-    print(medianStockPrice)
     if stock.info['numberOfAnalystOpinions'] < 3:
         return None
     assumedPercentChange = ((medianStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange # return amount
 
-print(getStockPredictionMedian("AIR"))
+# print(getStockPredictionMedian("AIR"))
