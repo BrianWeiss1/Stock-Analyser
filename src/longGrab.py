@@ -110,4 +110,3 @@ if (a == 'y' or a == 'Y'):
 # fmedian.close()
 meanfile.close()
 medianfile.close()
-
