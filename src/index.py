@@ -1,7 +1,7 @@
 import yfinance as yf
 import time
-from termcolor import colored
 import datetime
+import telebot
 previous = {}
 prediction = {}
 stockList = ['LIFE', 'SGMO', 'ALT']
@@ -16,8 +16,6 @@ def grabDetails(current):
         stock = yf.Ticker(symbol)
         current[symbol] = stock.info['currentPrice']
     return current
-
-import telebot
 
 BOT_TOKEN = '6115317421:AAHE51UxbBATUyzQPUiC0qr12EfyW0NYSsg'
 
