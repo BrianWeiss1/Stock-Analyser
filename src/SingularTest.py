@@ -40,4 +40,7 @@ def getStockPredictionMedian(symbol):
     assumedPercentChange = ((medianStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange # return amount
 
-# print(getStockPredictionMedian("AIR"))
+def getInfo(symbol):
+    return yf.Ticker(symbol).info
+
+print(getInfo("ENIC"))

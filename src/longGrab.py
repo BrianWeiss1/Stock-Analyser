@@ -1,7 +1,7 @@
 import yfinance as yf
-import time as timer
+import datetime
 
-startTime = timer.time()
+start_time = datetime.datetime.now()
 
 def selection_sort(arr):
     n = len(arr)
@@ -67,9 +67,9 @@ fstock.close()
 
 
 stockList = stockList[0]
-stockList = stockList[0:len(stockList)-1]
+stockList = stockList[0:len(stockList)]
 stockList = eval(stockList)
-
+stockList2 = []
 try:    
     listMedian = []
     listMean = []
@@ -80,33 +80,35 @@ try:
         if (stockPredictionMedian != None):
             listMedian.append([symbol, stockPredictionMedian])
             print(symbol)
+            stockList2.append(symbol)
         if (stockPredictionMean != None):
             listMean.append([symbol, stockPredictionMean])
 except:
     print("Keyboard error: " + listMedian)
 
 selection_sort(listMedian)
-endTimer = timer.time()
 
-totalTime = (endTimer-startTime)/1000
+end_time = datetime.datetime.now()
 
-print(str(totalTime) + ": Total Time")
+# Calculate the execution time
+execution_time = end_time - start_time
+print(f"Execution time: {execution_time}")
 
-print( "List Median is " + str(listMedian))
-
-a = input("Write to medianlist.txt?")
+a = 'y'
 if (a == 'y' or a == 'Y'):
     medianfile = open('documents/medianlist.txt', 'w')
     medianfile.write(str(listMedian))
+    medianfile.close()
 
 selection_sort(listMean)
 
-a = input("Write to meanlist.txt?")
 if (a == 'y' or a == 'Y'):
     meanfile = open('documents/meanlist.txt', 'w')
     meanfile.write(str(listMean))
+    meanfile.close()
 
-# fmean.close()
-# fmedian.close()
-meanfile.close()
-medianfile.close()
+if (a == 'y' or a == 'Y'):
+    meanfile = open('documents/stocks2.txt', 'w')
+    meanfile.write(str(stockList2))
+
+

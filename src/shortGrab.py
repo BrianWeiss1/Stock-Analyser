@@ -1,6 +1,7 @@
 import sys
 from termcolor import colored, cprint
 
+
 fmean = open("documents/meanlist.txt", 'r')
 fmedian = open("documents/medianlist.txt", 'r')
 
