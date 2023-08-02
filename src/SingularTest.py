@@ -9,11 +9,10 @@ def checkStock(symbol):
 def getStockPredictionMean(symbol):
     stock = checkStock(symbol)
     # print(stock.info)
-    try:
-        if stock.info['marketCap'] < 100000000:
-            return None
-    except:
-         return None
+    marketCap = stock.info['marketCap']
+
+    if marketCap < 10000000000:
+        return None
     try:
         currentStockPrice = stock.info['currentPrice']
         meanStockPrice = stock.info['targetMeanPrice']
@@ -28,6 +27,7 @@ def getStockPredictionMean(symbol):
     # meanStockPrice = stock.info['targetMeanPrice'] # 150
     # assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     # return assumedPercentChange # return amount
+print(getStockPredictionMean('BIOL'))
 
 
 
@@ -42,5 +42,5 @@ def getStockPredictionMedian(symbol):
 
 def getInfo(symbol):
     return yf.Ticker(symbol).info
-
-print(getInfo("ENIC"))
+stock = getInfo('ENIC') #ENIC #HEPS
+print(stock)
