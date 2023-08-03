@@ -16,6 +16,6 @@ def read_csv_to_dictionary(file_path):
     return result_dict
 
 # Example usage:
-csv_file_path = 'documents/nasdaq_screener_1690702100685.csv'
+csv_file_path = 'documents/nasdaq_screener_1691093113949.csv'
 your_dict = read_csv_to_dictionary(csv_file_path)
 print(your_dict['Symbol'])

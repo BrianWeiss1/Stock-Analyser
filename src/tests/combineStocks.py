@@ -17,22 +17,19 @@ stockList2 = eval(stockList2)
 
 fstock.close()
 print(len(stockList2))
-# print(stockList)
 
-# # print('\n\n')
+stock = None
+print(len(stockList))
+def append_unique_options(stockList, stockList2):
+    for option in stockList2:
+        if option.strip() not in stockList:
+            stockList.append(option)
 
-# # print(stockList2)
+append_unique_options(stockList, stockList2)
 
-# stock = None
-# print(len(stockList))
-# def append_unique_options(stockList, stockList2):
-#     for option in stockList2:
-#         if option.strip() not in stockList:
-#             stockList.append(option.strip())
+print(stockList)
+print(len(stockList))
+fileMedSense = open('documents/stocks3.txt', 'w')
+fileMedSense.write(str(stockList))
+fileMedSense.close()
 
-# append_unique_options(stockList, stockList2)
-
-# print(stockList)
-# print(len(stockList))
-
-# # print(stockList.sort())

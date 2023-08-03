@@ -17,7 +17,7 @@ def grabDetails(current):
         current[symbol] = stock.info['currentPrice']
     return current
 
-BOT_TOKEN = '6115317421:AAHE51UxbBATUyzQPUiC0qr12EfyW0NYSsg'
+BOT_TOKEN = '6452183517:AAGKA2dzsRbHc06amA_RhhfWeLUrFsLwbHw' # old 6115317421:AAHE51UxbBATUyzQPUiC0qr12EfyW0NYSsg
 
 bot = telebot.TeleBot(BOT_TOKEN)
      
