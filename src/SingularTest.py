@@ -42,5 +42,5 @@ def getStockPredictionMedian(symbol):
 
 def getInfo(symbol):
     return yf.Ticker(symbol).info
-stock = getInfo('ENIC') #ENIC #HEPS
+stock = getInfo('VNO.N') #ENIC #HEPS
 print(stock)
