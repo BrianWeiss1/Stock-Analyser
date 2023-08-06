@@ -2,6 +2,8 @@
 
 This Repository is based around analyzing stocks and deciding the best stocks to invest in based on their predictions from a stock analyst.
 
+This Repository has numerous ways of showing this data: from the bots to thr shortGrab.py
+
 There will be serveral customizable features that this file comes with:
 1. Custom Sensitivity
 

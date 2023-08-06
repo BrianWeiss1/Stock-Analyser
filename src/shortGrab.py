@@ -52,6 +52,7 @@ removeList('TLS')
 removeList('GGAL')
 removeList('DHC')
 removeList('BMA')
+
 sensitiveList = []
 if sensitivityInput == '3': # swapped cause messed up
     # Do LOW sensitivity
@@ -114,7 +115,7 @@ while(thing == True):
         break
 
 
-previousExtenedAmount = 3
+
 
 # print("The top 3 investments for " + colored("BUYING", 'green') + " are: (MEAN)")
 # for i in range(previousExtenedAmount):
