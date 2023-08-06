@@ -53,7 +53,7 @@ removeList('GGAL')
 removeList('DHC')
 removeList('BMA')
 sensitiveList = []
-if sensitivityInput == '1':
+if sensitivityInput == '3': # swapped cause messed up
     # Do LOW sensitivity
     # I want to go through the list of search through current list
     # compare with low sensitivity
@@ -64,7 +64,7 @@ elif sensitivityInput == '2':
     for i in range(len(listMedian)):
         if listMediumSense[listMedian[i][0]] == True:
             sensitiveList.append(listMedian[i]) 
-elif sensitivityInput == '3':
+elif sensitivityInput == '1':
     for i in range(len(listMedian)):
         if listHighSense[listMedian[i][0]] == True:
             sensitiveList.append(listMedian[i]) 
