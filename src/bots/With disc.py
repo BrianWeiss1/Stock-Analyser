@@ -1,7 +1,6 @@
 import yfinance as yf
 import time
 import datetime
-import telebot
 import discord
 import asyncio
 from discord.ext import commands
@@ -19,48 +18,48 @@ def checkStock(symbol):
     except:
         return None
 
-def grabDetails(current):
+async def grabDetails(current):
     for symbol in stockList:
         stock = yf.Ticker(symbol)
         current[symbol] = stock.info['currentPrice']
     return current
-async def telegramRun():
-    TELEGRAMBOTTOKEN = os.environ.get("telegramBotToken") # old 6115317421:AAHE51UxbBATUyzQPUiC0qr12EfyW0NYSsg
+# async def telegramRun():
+#     TELEGRAMBOTTOKEN = os.environ.get("6452183517:AAGKA2dzsRbHc06amA_RhhfWeLUrFsLwbHw") # old 6115317421:AAHE51UxbBATUyzQPUiC0qr12EfyW0NYSsg
 
-    bot = telebot.TeleBot(TELEGRAMBOTTOKEN)
-    @bot.message_handler(commands=['start'])
-    def start2(message):
-        global DAY
-        for i in range(365):
-            bot.send_message(message.chat.id, 'Day: ' + DAY+i)
-            DAY+=1
-            current = {}
-            current = grabDetails(current)
-            for i in range(len(stockList)):
-                symbol = stockList[i]
-                percentIncrease = ((current[symbol]/previous[symbol])*100)-100
-                awayFromPrediction = ((current[symbol]/prediction[symbol])*100)-100
+#     bot = telebot.TeleBot(TELEGRAMBOTTOKEN)
+#     @bot.message_handler(commands=['start'])
+#     def start2(message):
+#         global DAY
+#         for i in range(365):
+#             bot.send_message(message.chat.id, 'Day: ' + DAY+i)
+#             DAY+=1
+#             current = {}
+#             current = grabDetails(current)
+#             for i in range(len(stockList)):
+#                 symbol = stockList[i]
+#                 percentIncrease = ((current[symbol]/previous[symbol])*100)-100
+#                 awayFromPrediction = ((current[symbol]/prediction[symbol])*100)-100
                 
-                cost = "Bought At: " + str(previous[symbol])
-                currentPrice = "Currently: " + str(current[symbol]) 
-                increase = "Increase: " + str(round(percentIncrease, 2)) + "%"
-                awayFromPrediction = "From " + str(round(abs(awayFromPrediction), 2)) + " % " + "from " + str(prediction[symbol])
-                # prediction = str(prediction[symbol]) + "a"
-                predicted = "Predicted: " + str(prediction[symbol])
-                putIn = "Spent: $" + str(invested[symbol])
-                total = "Total: $" +  str(round((((percentIncrease + 100) / 100) * invested[symbol]), 2))
-                profit = "Profit: $" + str(round((((percentIncrease + 100) / 100) * invested[symbol]) - invested[symbol], 2))
-                date = "Date: " + str(datetime.date.today())
-                website = "https://finance.yahoo.com/quote/" + symbol
+#                 cost = "Bought At: " + str(previous[symbol])
+#                 currentPrice = "Currently: " + str(current[symbol]) 
+#                 increase = "Increase: " + str(round(percentIncrease, 2)) + "%"
+#                 awayFromPrediction = "From " + str(round(abs(awayFromPrediction), 2)) + " % " + "from " + str(prediction[symbol])
+#                 # prediction = str(prediction[symbol]) + "a"
+#                 predicted = "Predicted: " + str(prediction[symbol])
+#                 putIn = "Spent: $" + str(invested[symbol])
+#                 total = "Total: $" +  str(round((((percentIncrease + 100) / 100) * invested[symbol]), 2))
+#                 profit = "Profit: $" + str(round((((percentIncrease + 100) / 100) * invested[symbol]) - invested[symbol], 2))
+#                 date = "Date: " + str(datetime.date.today())
+#                 website = "https://finance.yahoo.com/quote/" + symbol
 
 
-                bot.send_message(message.chat.id,str(symbol) + "\n\n" + putIn + "\n" + total + "\n" + profit + "\n\n" + cost + "\n" + currentPrice + "\n" + predicted + "\n\n" + increase + "\n" + awayFromPrediction + "\n\n" + date + "\n\n" + website)
-                time.sleep(86400)
-    bot.infinity_polling()
+#                 bot.send_message(message.chat.id,str(symbol) + "\n\n" + putIn + "\n" + total + "\n" + profit + "\n\n" + cost + "\n" + currentPrice + "\n" + predicted + "\n\n" + increase + "\n" + awayFromPrediction + "\n\n" + date + "\n\n" + website)
+#                 time.sleep(86400)
+#     bot.infinity_polling()
 
 
 async def discordRun():
-    TOKEN = os.environ.get("pythonBotToken")
+    TOKEN = os.environ.get("MTA0NjA3MDYwMDUwMzkzMDg5MA.G9UwVr.WYqvFy59UrCG-pVRM3GIyn1kU660u4IKVJKWyI")
 
     intents = discord.Intents.default()
     intents.message_content = True
@@ -139,7 +138,6 @@ async def discordRun():
         current = {}
         current = grabDetails(current)
         for i in range(len(stockList)):
-            print(i)
             symbol = stockList[i]
             percentIncrease = ((current[symbol]/previous[symbol])*100)-100
             awayFromPrediction = ((current[symbol]/prediction[symbol])*100)-100
@@ -148,7 +146,6 @@ async def discordRun():
             currentPrice = "Currently: " + str(current[symbol]) 
             increase = "Increase: " + str(round(percentIncrease, 2)) + "%"
             awayFromPrediction = "From " + str(round(abs(awayFromPrediction), 2)) + " % " + "from " + str(prediction[symbol])
-            # prediction = str(prediction[symbol]) + "a"
             predicted = "Predicted: " + str(prediction[symbol])
             putIn = "Spent: $" + str(invested[symbol])
             total = "Total: $" +  str(round((((percentIncrease + 100) / 100) * invested[symbol]), 2))
@@ -161,17 +158,14 @@ async def discordRun():
             time.sleep(5)
     @bot.command()
     async def start(ctx):
-        # global day
         DAY = 6
-        await ctx.send("Starting the bot! ") #works until this point
+        await ctx.send("Starting the bot! ")
         for i in range(365):
             await oneRun(ctx)
             DAY+=1
             time.sleep(18400)
     await bot.start(TOKEN)
 
-# Assuming this code is in your main module
-    
 if __name__ == "__main__":
     for i in range(100):
         asyncio.run(discordRun())
