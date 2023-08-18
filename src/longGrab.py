@@ -43,7 +43,7 @@ def grabMarketCap(stockMarketCap, symbol):
         lowSense[symbol] = False
         return True
     else:
-        return False
+        return True
 
 # def getStockPredictionMean(stock):
 #     try:

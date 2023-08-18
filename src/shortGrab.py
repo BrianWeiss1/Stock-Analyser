@@ -1,5 +1,6 @@
 import sys
 from termcolor import colored
+import time
 print("\nHello! What is the amount of Sensitivity you would prefer?\n\n\n\n\n")
 print("1. " + colored('LOW' , 'green') + " sensitivity (>500 Million MC)")
 print("2. " + colored('MEDIUM' , 'yellow') + " sensitivity (>100 Million MC)")
@@ -69,9 +70,13 @@ elif sensitivityInput == '1':
     for i in range(len(listMedian)):
         if listHighSense[listMedian[i][0]] == True:
             sensitiveList.append(listMedian[i]) 
+elif sensitivityInput == '0':
+    print("Keyboard Error: 401")
+    time.sleep(50)
+    sensitiveList = listMedian
 else:
     print("Keyboard Error: 401")
-
+    time.sleep(1000)
 print("The top 3 investments for " + colored("BUYING", 'green') + " are: (MEDIAN)")
 previousExtenedAmount = 3
 
