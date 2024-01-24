@@ -77,7 +77,7 @@ def getStockPredictionMedian(stock):
     assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange
 
-fstock = open("documents/stocks.txt", 'r')
+fstock = open("src/documents/stocks.txt", 'r')
 
 stockList = fstock.readlines()
 
@@ -117,7 +117,7 @@ print(f"Execution time: {execution_time}")
 
 a = 'y'
 if (a == 'y' or a == 'Y'):
-    medianfile = open('documents/medianlist.txt', 'w')
+    medianfile = open('src/documents/medianlist.txt', 'w')
     medianfile.write(str(listMedian))
     medianfile.close()
 
@@ -129,21 +129,21 @@ if (a == 'y' or a == 'Y'):
 #     meanfile.close()
 
 if (a == 'y' or a == 'Y'):
-    stockUpdatedFile = open('documents/stocks2.txt', 'w')
+    stockUpdatedFile = open('src/documents/stocks2.txt', 'w')
     stockUpdatedFile.write(str(stockList2))
     stockUpdatedFile.close()
 
 if (a == 'y' or a == 'Y'):
-    fileHighSense = open('documents/highSensitivity.txt', 'w')
+    fileHighSense = open('src/documents/highSensitivity.txt', 'w')
     fileHighSense.write(str(highSense))
     fileHighSense.close()
 
 if (a == 'y' or a == 'Y'):
-    fileMedSense = open('documents/mediumSensitivity.txt', 'w')
+    fileMedSense = open('src/documents/mediumSensitivity.txt', 'w')
     fileMedSense.write(str(mediumSense))
     fileMedSense.close()
 
 if (a == 'y' or a == 'Y'):
-    fileLowSense = open('documents/lowSensitivity.txt', 'w')
+    fileLowSense = open('src/documents/lowSensitivity.txt', 'w')
     fileLowSense.write(str(lowSense))
     fileLowSense.close()

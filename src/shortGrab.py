@@ -53,7 +53,8 @@ removeList('TLS')
 removeList('GGAL')
 removeList('DHC')
 removeList('BMA')
-
+removeList('TVE')
+removeList('CANO')
 sensitiveList = []
 if sensitivityInput == '3': # swapped cause messed up
     # Do LOW sensitivity
