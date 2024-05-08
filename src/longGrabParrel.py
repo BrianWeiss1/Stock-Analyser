@@ -1,13 +1,12 @@
 import yfinance as yf
 import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Dict
 
 start_time = datetime.datetime.now()
-highSense = {}
-mediumSense = {}
-lowSense = {}
-# low - 500mil+
-# medium - 100mil+
-# high - 20mil+
+highSense: Dict[str, int] = {}
+mediumSense: Dict[str, int] = {}
+lowSense: Dict[str, int] = {}
 
 def selection_sort(arr):
     n = len(arr)
@@ -20,7 +19,6 @@ def selection_sort(arr):
 
 def checkStock(symbol):
     try:
-        print(stock)
         stock = yf.Ticker(symbol)
         return stock
     except:
@@ -28,17 +26,17 @@ def checkStock(symbol):
 def grabMarketCap(stockMarketCap, symbol):
     if stockMarketCap == None:
         return False
-    if stockMarketCap > 500000000:
+    if stockMarketCap > 500000000: # 5 bil
         highSense[symbol] = False
         mediumSense[symbol] = False
         lowSense[symbol] = True
         return True
-    elif stockMarketCap > 100000000:
+    elif stockMarketCap > 100000000: # 1 bil
         highSense[symbol] = False
         mediumSense[symbol] = True
         lowSense[symbol] = False  
         return True
-    elif stockMarketCap > 20000000:
+    elif stockMarketCap > 30000000: # 200 mil
         highSense[symbol] = True
         mediumSense[symbol] = False
         lowSense[symbol] = False
@@ -46,39 +44,34 @@ def grabMarketCap(stockMarketCap, symbol):
     else:
         return True
 
-# def getStockPredictionMean(stock):
-#     try:
-#         if stock.info['marketCap'] < 100000000:
-#             return None
-#     except:
-#          return None
-#     try:
-#         currentStockPrice = stock.info['currentPrice']
-#         meanStockPrice = stock.info['targetMeanPrice']
-#     except:
-#          return None
-#     if stock.info['numberOfAnalystOpinions'] < 3:
-#         return None
-#     assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
-#     return assumedPercentChange
 
 def getStockPredictionMedian(stock):
     try:
+        # print(stock.info)
         if grabMarketCap(stock.info['marketCap'], stock.info['symbol']) == False:
+            return None
+        if stock.info['currentPrice'] < 3:  # Check if stock price is over $3
             return None
     except:
          return None
     try:
         currentStockPrice = stock.info['currentPrice']
-        meanStockPrice = stock.info['targetMedianPrice']
+        medianStockPrice = stock.info['targetMedianPrice']
     except:
          return None
     if stock.info['numberOfAnalystOpinions'] < 3:
         return None
-    assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
+    assumedPercentChange = ((medianStockPrice / currentStockPrice) * 100) - 100
     return assumedPercentChange
 
-fstock = open("documents/stocks.txt", 'r')
+def process_stock(symbol):
+    stock = checkStock(symbol)
+    stockPredictionMedian = getStockPredictionMedian(stock)
+    if stockPredictionMedian is not None:
+        return [symbol, stockPredictionMedian]
+
+
+fstock = open("src/documents/stocks.txt", 'r')
 
 stockList = fstock.readlines()
 
@@ -89,26 +82,34 @@ stockList = stockList[0]
 stockList = stockList[0:len(stockList)]
 stockList = eval(stockList)
 
-
 stockList2 = []
-print(type(stockList))
-print(stockList)
-try:    
+
+
+with ThreadPoolExecutor() as executor:
+    futures = {executor.submit(process_stock, symbol): symbol for symbol in stockList}
     listMedian = []
-    for symbol in stockList:
-        stock = checkStock(symbol)
-        stockPredictionMedian = getStockPredictionMedian(stock)
-        # stockPredictionMean = getStockPredictionMean(stock)
-        if (stockPredictionMedian != None):
-            listMedian.append([symbol, stockPredictionMedian])
-            print(symbol)
-            stockList2.append(symbol)
-        # if (stockPredictionMean != None):
-        #     listMean.append([symbol, stockPredictionMean])
-except:
-    print("Keyboard error: " + listMedian)
+    for future in as_completed(futures):
+        result = future.result()
+        if result is not None:
+            listMedian.append(result)
+            print(result[0])
+            stockList2.append(result[0])
 
 selection_sort(listMedian)
+
+end_time = datetime.datetime.now()
+execution_time = end_time - start_time
+print(f"Execution time: {execution_time}")
+
+
+
+
+
+
+
+
+
+
 
 end_time = datetime.datetime.now()
 
@@ -118,7 +119,7 @@ print(f"Execution time: {execution_time}")
 
 a = 'y'
 if (a == 'y' or a == 'Y'):
-    medianfile = open('documents/medianlist.txt', 'w')
+    medianfile = open('src/documents/medianlist.txt', 'w')
     medianfile.write(str(listMedian))
     medianfile.close()
 
@@ -130,21 +131,21 @@ if (a == 'y' or a == 'Y'):
 #     meanfile.close()
 
 if (a == 'y' or a == 'Y'):
-    stockUpdatedFile = open('documents/stocks2.txt', 'w')
+    stockUpdatedFile = open('src/documents/stocks2.txt', 'w')
     stockUpdatedFile.write(str(stockList2))
     stockUpdatedFile.close()
 
 if (a == 'y' or a == 'Y'):
-    fileHighSense = open('documents/highSensitivity.txt', 'w')
+    fileHighSense = open('src/documents/highSensitivity.txt', 'w')
     fileHighSense.write(str(highSense))
     fileHighSense.close()
 
 if (a == 'y' or a == 'Y'):
-    fileMedSense = open('documents/mediumSensitivity.txt', 'w')
+    fileMedSense = open('src/documents/mediumSensitivity.txt', 'w')
     fileMedSense.write(str(mediumSense))
     fileMedSense.close()
 
 if (a == 'y' or a == 'Y'):
-    fileLowSense = open('documents/lowSensitivity.txt', 'w')
+    fileLowSense = open('src/documents/lowSensitivity.txt', 'w')
     fileLowSense.write(str(lowSense))
     fileLowSense.close()
