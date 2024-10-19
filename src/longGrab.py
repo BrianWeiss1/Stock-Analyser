@@ -79,7 +79,7 @@ def getStockPredictionMedian(stock):
     assumedPercentChange = ((meanStockPrice/currentStockPrice)*100)-100 # find % increase/decrease
     return assumedPercentChange
 
-fstock = open("documents/stocks.txt", 'r')
+fstock = open("src/documents/stocks.txt", 'r')
 
 stockList = fstock.readlines()
 
