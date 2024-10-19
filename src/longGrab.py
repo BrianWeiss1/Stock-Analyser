@@ -20,10 +20,11 @@ def selection_sort(arr):
 
 def checkStock(symbol):
     try:
-        print(stock)
+        # print(symbol)
         stock = yf.Ticker(symbol)
         return stock
-    except:
+    except Exception as e:
+        print(e)
         return None
 def grabMarketCap(stockMarketCap, symbol):
     if stockMarketCap == None:
@@ -96,6 +97,7 @@ print(stockList)
 try:    
     listMedian = []
     for symbol in stockList:
+        # print('a')
         stock = checkStock(symbol)
         stockPredictionMedian = getStockPredictionMedian(stock)
         # stockPredictionMean = getStockPredictionMean(stock)
@@ -105,7 +107,7 @@ try:
             stockList2.append(symbol)
         # if (stockPredictionMean != None):
         #     listMean.append([symbol, stockPredictionMean])
-except:
+except KeyboardInterrupt:
     print("Keyboard error: " + listMedian)
 
 selection_sort(listMedian)
